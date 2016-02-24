@@ -1,8 +1,9 @@
 package org.javabrains.faisal.dto;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,20 +21,19 @@ public class UserDetails {
 	private String userName;
 	
 	//@Embedded Not mandatory
-	@Embedded
-	private Address address;
-	public Address getAddress() {
-		return address;
+	//@Embedded
+	//private Address address;
+	
+	@ElementCollection
+	private Set<Address> listOfAddressses=new HashSet<>();
+	
+	public Set<Address> getListOfAddressses() {
+		return listOfAddressses;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	
-	
-	
-	
+	public void setListOfAddressses(Set<Address> listOfAddressses) {
+		this.listOfAddressses = listOfAddressses;
+	}	
 	
 	/*
 	 * 

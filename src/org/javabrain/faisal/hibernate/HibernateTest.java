@@ -19,11 +19,17 @@ public class HibernateTest {
 		address.setState("Delhi");
 		address.setStreet("Shaheen bagh");
 		
-		user.setAddress(address);
+		Address address2=new Address();
+		address2.setCity("Gopalganj");
+		address2.setPincode("841428");
+		address2.setState("Bihar");
+		address2.setStreet("Dargah");
 		
+		user.getListOfAddressses().add(address);
+		user.getListOfAddressses().add(address2);
 		user2.setUserName("Raza");
-		user2.setAddress(address);
-
+		user2.getListOfAddressses().add(address);
+		
 		// sessionFactory one object per application
 		SessionFactory sessionFactory = new Configuration().configure()
 				.buildSessionFactory();
@@ -41,7 +47,6 @@ public class HibernateTest {
 		session.beginTransaction();
 		user=(UserDetails)session.get(UserDetails.class, 1);
 
-		System.out.println(user.getUserName()+" "+user.getAddress());
 	}
 
 }
