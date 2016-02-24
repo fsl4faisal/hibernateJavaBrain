@@ -1,23 +1,28 @@
 package org.javabrain.faisal.hibernate;
 
-import java.util.Date;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.javabrains.faisal.dto.Address;
 import org.javabrains.faisal.dto.UserDetails;
 
 public class HibernateTest {
 
 	public static void main(String[] args) {
 		UserDetails user = new UserDetails();
-
-		user.setUserId(1);
-		user.setUserName("Raza 3");
-
-		user.setAddress("goplganj");
-		user.setDescription("from Jamia and TCS");
-		user.setJoinDate(new Date());
+		UserDetails user2 = new UserDetails();
+		user.setUserName("Faisal");
+		
+		Address address=new Address();
+		address.setCity("Delhi");
+		address.setPincode("110025");
+		address.setState("Delhi");
+		address.setStreet("Shaheen bagh");
+		
+		user.setAddress(address);
+		
+		user2.setUserName("Raza");
+		user2.setAddress(address);
 
 		// sessionFactory one object per application
 		SessionFactory sessionFactory = new Configuration().configure()
@@ -26,6 +31,7 @@ public class HibernateTest {
 
 		session.beginTransaction();
 		session.save(user);
+		session.save(user2);
 		session.getTransaction().commit();
 		session.close();
 

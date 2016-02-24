@@ -1,55 +1,52 @@
 package org.javabrains.faisal.dto;
 
-import java.util.Date;
-
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Table;
 
 @Entity
-// @Table(name="USER_DETAILS")
+@Table(name="USER_DETAILS")
 public class UserDetails {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int userId;
 
-	public Date getJoinDate() {
-		return joinDate;
-	}
-
-	public void setJoinDate(Date joinDate) {
-		this.joinDate = joinDate;
-	}
-
-	public String getAddress() {
+	private String userName;
+	
+	//@Embedded Not mandatory
+	@Embedded
+	private Address address;
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	private String userName;
-
-	@Temporal(TemporalType.DATE)
-	private Date joinDate;
-
-	private String address;
-
-	// Large OBject lob(byte stream lob) or clob(character lob)
-	@Lob
-	private String description;
-
+	
+	
+	
+	
+	
+	/*
+	 * 
+	 * /// Large OBject lob(byte stream lob) or clob(character lob)
+	 * @Lob
+		private String description;
+	 * 
+	 * */
+	
+	
+	
+	
+	
 	public int getUserId() {
 		return userId;
 	}
