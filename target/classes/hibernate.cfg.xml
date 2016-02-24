@@ -36,10 +36,13 @@
         <!-- if there is an update then update the database schema on startup(not recreate it) -->
         <property name="hbm2ddl.auto">create</property>
 
-        <!-- Names the annotated entity class 
+        <!-- Name the annotated entity class 
         Here we have declared the class which have entities
+        
+        if you define a new entity class; an entry goes here below
         -->
         <mapping class="org.javabrains.faisal.dto.UserDetails"/>
+        <mapping class="org.javabrains.faisal.dto.Vehicle"/>
 
     </session-factory>
 

@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.javabrains.faisal.dto.Address;
 import org.javabrains.faisal.dto.UserDetails;
+import org.javabrains.faisal.dto.Vehicle;
 
 public class HibernateTest {
 
@@ -25,10 +26,16 @@ public class HibernateTest {
 		address2.setState("Bihar");
 		address2.setStreet("Dargah");
 		
+		
+		Vehicle vehicle=new Vehicle();
+		vehicle.setVehicleName("Bullet ThunderBird");
+		
+		user.setVehicle(vehicle);
 		user.getListOfAddressses().add(address);
 		user.getListOfAddressses().add(address2);
 		user2.setUserName("Raza");
 		user2.getListOfAddressses().add(address);
+		user2.setVehicle(vehicle);
 		
 		// sessionFactory one object per application
 		SessionFactory sessionFactory = new Configuration().configure()
@@ -37,6 +44,7 @@ public class HibernateTest {
 
 		session.beginTransaction();
 		session.save(user);
+		session.save(vehicle);
 		session.save(user2);
 		session.getTransaction().commit();
 		session.close();
@@ -46,8 +54,9 @@ public class HibernateTest {
 		session = sessionFactory.openSession();
 		session.beginTransaction();
 		user=(UserDetails)session.get(UserDetails.class, 1);
-		session.close();
 		System.out.println("size"+user.getListOfAddressses().size());
+		session.close();
+		
 		
 	}
 
