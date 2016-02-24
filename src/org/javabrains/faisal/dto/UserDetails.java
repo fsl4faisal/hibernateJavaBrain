@@ -1,52 +1,59 @@
 package org.javabrains.faisal.dto;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 @Entity
-@Table(name="USER_DETAILS")
+@Table(name = "USER_DETAILS")
 public class UserDetails {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "USER_ID")
 	private int userId;
 
+	@Column(name = "USER_NAME")
 	private String userName;
-	
-	//@Embedded Not mandatory
-	//@Embedded
-	//private Address address;
-	
+
+	// @Embedded Not mandatory
+	// @Embedded
+	// private Address address;
+
+	@GenericGenerator(name = "sequence-gen", strategy = "sequence")
 	@ElementCollection
-	private Set<Address> listOfAddressses=new HashSet<>();
-	
-	public Set<Address> getListOfAddressses() {
+	@CollectionId(columns = { @Column(name = "ADDRESS_ID") }, generator = "sequence-gen", type = @Type(type = "long"))
+	@JoinTable(name = "USER_ADDRESS", joinColumns = @JoinColumn(name = "USER_ID"))
+	private Collection<Address> listOfAddressses = new ArrayList<>();
+
+	public Collection<Address> getListOfAddressses() {
 		return listOfAddressses;
 	}
 
-	public void setListOfAddressses(Set<Address> listOfAddressses) {
+	public void setListOfAddressses(Collection<Address> listOfAddressses) {
 		this.listOfAddressses = listOfAddressses;
-	}	
-	
+	}
+
 	/*
 	 * 
 	 * /// Large OBject lob(byte stream lob) or clob(character lob)
-	 * @Lob
-		private String description;
 	 * 
-	 * */
-	
-	
-	
-	
-	
+	 * @Lob private String description;
+	 */
+
 	public int getUserId() {
 		return userId;
 	}

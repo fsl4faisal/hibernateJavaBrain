@@ -7,16 +7,16 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address {
 	
-	@Column(name="street_name")
+	@Column(name="STREET_NAME")
 	private String street;
 	
-	@Column(name="city_name")
+	@Column(name="CITY_NAME")
 	private String city;
 	
-	@Column(name="pincode")
+	@Column(name="PINCODE")
 	private String pincode;
 	
-	@Column(name="state")
+	@Column(name="STATE_NAME")
 	private String state;
 	
 	public String getStreet() {
