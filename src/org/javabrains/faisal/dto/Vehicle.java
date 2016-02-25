@@ -1,11 +1,13 @@
 package org.javabrains.faisal.dto;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,16 +21,16 @@ public class Vehicle {
 	@Column(name="VEHICLE_NAME")
 	private String vehicleName;
 	
-	@ManyToOne
-	@JoinColumn(name="USER_ID")
-	private UserDetails userDetails;
+	@ManyToMany(mappedBy="vehicle")
+	private Collection<UserDetails> userList=new ArrayList<UserDetails>();
 
-	public UserDetails getUserDetails() {
-		return userDetails;
+
+	public Collection<UserDetails> getUserList() {
+		return userList;
 	}
 
-	public void setUserDetails(UserDetails userDetails) {
-		this.userDetails = userDetails;
+	public void setUserList(Collection<UserDetails> userList) {
+		this.userList = userList;
 	}
 
 	public int getVehicleId() {

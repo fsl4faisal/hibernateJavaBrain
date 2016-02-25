@@ -27,20 +27,20 @@ public class HibernateTest {
 		
 		//Didirectional relationship
 		user.getVehicle().add(vehicle);
-		vehicle.setUserDetails(user);
+		vehicle.getUserList().add(user);
 		
 		user.getVehicle().add(vehicle2);
-		vehicle2.setUserDetails(user);
+		vehicle2.getUserList().add(user);
 		
 		user2.getVehicle().add(vehicle3);
-		vehicle3.setUserDetails(user2);
+		vehicle3.getUserList().add(user2);
 		
 		// sessionFactory one object per application
 		SessionFactory sessionFactory = new Configuration().configure()
 				.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 
-		session.beginTransaction();
+		session.beginTransaction(); 
 		session.save(user);
 		session.save(user2);
 		
