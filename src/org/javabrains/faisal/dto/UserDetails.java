@@ -4,20 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.CollectionId;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "USER_DETAILS")
@@ -31,30 +25,11 @@ public class UserDetails {
 	@Column(name = "USER_NAME")
 	private String userName;
 
-	@OneToOne
-	@JoinColumn(name="VEHICLE_ID")
-	private Vehicle vehicle;
-
-	@GenericGenerator(name = "sequence-gen", strategy = "sequence")
-	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionId(columns = { @Column(name = "ADDRESS_ID") }, generator = "sequence-gen", type = @Type(type = "long"))
-	@JoinTable(name = "USER_ADDRESS", joinColumns = @JoinColumn(name = "USER_ID"))
-	private Collection<Address> listOfAddressses = new ArrayList<>();
-
-	public Collection<Address> getListOfAddressses() {
-		return listOfAddressses;
-	}
-
-	public void setListOfAddressses(Collection<Address> listOfAddressses) {
-		this.listOfAddressses = listOfAddressses;
-	}
-
-	/*
-	 * 
-	 * /// Large OBject lob(byte stream lob) or clob(character lob)
-	 * 
-	 * @Lob private String description;
-	 */
+	@OneToMany
+	@JoinTable(name = "USER_VEHICLE", 
+	joinColumns = @JoinColumn(name = "USER_ID"),
+	inverseJoinColumns=@JoinColumn(name="VEHICLE_ID"))
+	private Collection<Vehicle> vehicle = new ArrayList<>();
 
 	public int getUserId() {
 		return userId;
@@ -72,11 +47,11 @@ public class UserDetails {
 		this.userName = userName;
 	}
 
-	public Vehicle getVehicle() {
+	public Collection<Vehicle> getVehicle() {
 		return vehicle;
 	}
 
-	public void setVehicle(Vehicle vehicle) {
+	public void setVehicle(Collection<Vehicle> vehicle) {
 		this.vehicle = vehicle;
 	}
 

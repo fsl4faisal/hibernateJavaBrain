@@ -3,7 +3,6 @@ package org.javabrain.faisal.hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.javabrains.faisal.dto.Address;
 import org.javabrains.faisal.dto.UserDetails;
 import org.javabrains.faisal.dto.Vehicle;
 
@@ -13,29 +12,28 @@ public class HibernateTest {
 		UserDetails user = new UserDetails();
 		UserDetails user2 = new UserDetails();
 		user.setUserName("Faisal");
+		user2.setUserName("Raza");
 		
-		Address address=new Address();
-		address.setCity("Delhi");
-		address.setPincode("110025");
-		address.setState("Delhi");
-		address.setStreet("Shaheen bagh");
-		
-		Address address2=new Address();
-		address2.setCity("Gopalganj");
-		address2.setPincode("841428");
-		address2.setState("Bihar");
-		address2.setStreet("Dargah");
 		
 		
 		Vehicle vehicle=new Vehicle();
-		vehicle.setVehicleName("Bullet ThunderBird");
+		Vehicle vehicle2=new Vehicle();
+		Vehicle vehicle3=new Vehicle();
 		
-		user.setVehicle(vehicle);
-		user.getListOfAddressses().add(address);
-		user.getListOfAddressses().add(address2);
-		user2.setUserName("Raza");
-		user2.getListOfAddressses().add(address);
-		user2.setVehicle(vehicle);
+		vehicle.setVehicleName("Bullet ThunderBird");
+		vehicle2.setVehicleName("yamaha");
+		vehicle3.setVehicleName("bullet");
+		
+		
+		//Didirectional relationship
+		user.getVehicle().add(vehicle);
+		vehicle.setUserDetails(user);
+		
+		user.getVehicle().add(vehicle2);
+		vehicle2.setUserDetails(user);
+		
+		user2.getVehicle().add(vehicle3);
+		vehicle3.setUserDetails(user2);
 		
 		// sessionFactory one object per application
 		SessionFactory sessionFactory = new Configuration().configure()
@@ -44,19 +42,15 @@ public class HibernateTest {
 
 		session.beginTransaction();
 		session.save(user);
-		session.save(vehicle);
 		session.save(user2);
+		
+		session.save(vehicle);
+		session.save(vehicle2);
+		session.save(vehicle3);
 		session.getTransaction().commit();
 		session.close();
 
-		user = null;
-
-		session = sessionFactory.openSession();
-		session.beginTransaction();
-		user=(UserDetails)session.get(UserDetails.class, 1);
-		System.out.println("size"+user.getListOfAddressses().size());
-		session.close();
-		
+				
 		
 	}
 
