@@ -6,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
 @Entity
 //@org.hibernate.annotations.Entity(selectBeforeUpdate=true)
@@ -36,6 +35,11 @@ public class UserDetails {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDetails [userId=" + userId + ", userName=" + userName + "]";
 	}
 
 	
