@@ -5,7 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SelectBeforeUpdate;
 @Entity
+//@org.hibernate.annotations.Entity(selectBeforeUpdate=true)
+@SelectBeforeUpdate
 @Table(name = "USER_DETAILS")
 public class UserDetails {
 
