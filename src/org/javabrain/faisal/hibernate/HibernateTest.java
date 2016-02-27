@@ -22,13 +22,17 @@ public class HibernateTest {
 		String userId="4";
 		String userName="User 3";
 		
-		Query query=session.createQuery("select userName from UserDetails where userId = :userId and userName= :userName");
+		//Query query=session.createQuery("select userName from UserDetails where userId = :userId and userName= :userName");
 		//query.setFirstResult(2);
 		//query.setMaxResults(5);
-		query.setParameter("userName", userName);
-		query.setParameter("userId", Integer.parseInt(userId));
+		//Query query=session.getNamedQuery("UserDetails.byId");
+		//query.setParameter("userId", Integer.parseInt(userId));
 		
-		List<String> users=query.list();
+		Query query=session.getNamedQuery("UserDetails.byName");
+		query.setParameter("userName", userName);
+		
+		
+		List<UserDetails> users=query.list();
 		session.getTransaction().commit();
 		session.close();
 
