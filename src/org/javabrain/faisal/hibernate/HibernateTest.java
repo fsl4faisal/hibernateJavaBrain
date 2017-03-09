@@ -1,9 +1,8 @@
 package org.javabrain.faisal.hibernate;
 
-import java.util.List;
-import java.util.function.ObjLongConsumer;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -27,8 +26,15 @@ public class HibernateTest {
 		homeAddress.setPincode("841428");
 		homeAddress.setState("Bihar");
 		homeAddress.setStreet("Dargah Road");
-		user.setHomeAddress(homeAddress);
-		user.setOfficeAddress(homeAddress);
+		
+		Address officeAddress=new Address();
+		officeAddress.setCity("Gopalganj 2");
+		officeAddress.setPincode("841428 22");
+		officeAddress.setState("Bihar 2");
+		officeAddress.setStreet("Dargah Road 2");
+		
+		user.getAddress().add(homeAddress);
+		user.getAddress().add(officeAddress);
 		session.save(user);
 		session.getTransaction().commit();		
 		

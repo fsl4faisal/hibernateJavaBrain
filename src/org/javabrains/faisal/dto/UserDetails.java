@@ -1,18 +1,24 @@
 package org.javabrains.faisal.dto;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.persistence.Column;
-import javax.persistence.Embedded;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SelectBeforeUpdate;
+import org.hibernate.annotations.Type;
 
 @Entity
 // @org.hibernate.annotations.Entity(selectBeforeUpdate=true)
@@ -30,25 +36,12 @@ public class UserDetails {
 	@Column(name = "USER_NAME")
 	private String userName;
 
-	@Embedded @AttributeOverrides
-	({
-		@AttributeOverride(name="street",column=@Column(name="HOME_STREET_NAME")),
-		@AttributeOverride(name = "city", column = @Column(name = "HOME_CITY_NAME")),
-		@AttributeOverride(name = "pincode", column = @Column(name = "HOME_PINCODE_NAME")),
-		@AttributeOverride(name = "state", column = @Column(name = "HOME_STATE_NAME"))
-		
-	})
-	private Address homeAddress;
-
-	@Embedded @AttributeOverrides
-	({
-		@AttributeOverride(name="street",column=@Column(name="OFFICE_STREET_NAME")),
-		@AttributeOverride(name = "city", column = @Column(name = "OFFICE_CITY_NAME")),
-		@AttributeOverride(name = "pincode", column = @Column(name = "OFFICE_PINCODE_NAME")),
-		@AttributeOverride(name = "state", column = @Column(name = "OFFICE_STATE_NAME"))
-		
-	})
-	private Address officeAddress;
+	@ElementCollection
+	@JoinTable(name="USER_ADDRESS",
+	joinColumns=@JoinColumn(name="USER_ID"))
+	@GenericGenerator(name="hilo-gen",strategy="sequence")
+	@CollectionId(columns={@Column(name="ADDRESS_ID")},generator="hilo-gen",type=@Type(type="long"))
+	private Collection<Address> address=new ArrayList<Address>();
 
 	public int getUserId() {
 		return userId;
@@ -66,28 +59,14 @@ public class UserDetails {
 		this.userName = userName;
 	}
 
-	public Address getHomeAddress() {
-		return homeAddress;
+	public Collection<Address> getAddress() {
+		return address;
 	}
 
-	public void setHomeAddress(Address homeAddress) {
-		this.homeAddress = homeAddress;
+	public void setAddress(Collection<Address> address) {
+		this.address = address;
 	}
-
-	public Address getOfficeAddress() {
-		return officeAddress;
-	}
-
-	public void setOfficeAddress(Address officeAddress) {
-		this.officeAddress = officeAddress;
-	}
-
-	@Override
-	public String toString() {
-		return "UserDetails [userId=" + userId + ", userName=" + userName + ", homeAddress=" + homeAddress
-				+ ", officeAddress=" + officeAddress + "]";
-	}
-
+	
 	
 
 }
