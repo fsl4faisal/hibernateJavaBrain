@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.javabrains.faisal.dto.Address;
 import org.javabrains.faisal.dto.UserDetails;
 public class HibernateTest {
 
@@ -19,30 +20,24 @@ public class HibernateTest {
 				.buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		String userId="4";
-		String userName="User 3";
+		UserDetails user=new UserDetails();
+		user.setUserName("faisal");	
+		Address homeAddress=new Address();
+		homeAddress.setCity("Gopalganj");
+		homeAddress.setPincode("841428");
+		homeAddress.setState("Bihar");
+		homeAddress.setStreet("Dargah Road");
+		user.setHomeAddress(homeAddress);
+		user.setOfficeAddress(homeAddress);
+		session.save(user);
+		session.getTransaction().commit();		
 		
-		//Query query=session.createQuery("select userName from UserDetails where userId = :userId and userName= :userName");
-		//query.setFirstResult(2);
-		//query.setMaxResults(5);
-		//Query query=session.getNamedQuery("UserDetails.byId");
-		//query.setParameter("userId", Integer.parseInt(userId));
+		user=null;
+		session=sessionFactory.openSession();
+		session.beginTransaction();
+		user=(UserDetails)session.get(UserDetails.class, 1);
+		System.out.println(user);
 		
-		Query query=session.getNamedQuery("UserDetails.byName");
-		query.setParameter("userName", userName);
-		
-		
-		List<UserDetails> users=query.list();
-		session.getTransaction().commit();
-		session.close();
-
-		//System.out.println("size of list "+users.size()+users.toString());
-		
-		for(int i=0;i<users.size();i++)
-			System.out.println(users.get(i));
-		
-		//for(UserDetails user:users)
-			//System.out.println(user.getUserName());
 		
 		
 	}
