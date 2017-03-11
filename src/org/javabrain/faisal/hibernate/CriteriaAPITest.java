@@ -33,6 +33,8 @@ public class CriteriaAPITest {
 		System.out.println("Displaying again");
 		for (UserDetails user : users)
 			System.out.println(user.getUserId() + " " + user.getUserName());
+		
+		System.out.println("Making some changes in order to push from Eclipse ");
 	}
 
 }
