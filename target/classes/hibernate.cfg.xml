@@ -30,8 +30,8 @@
 		<!-- Echo all executed SQL to stdout -->
 		<property name="show_sql">true</property>
 
-		<!-- re-create the database every time -->
-		<property name="hbm2ddl.auto">create</property>
+		<!-- re-create the database every time (use create) otherwise use update-->
+		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Name the annotated entity class Here we have declared the class which 
 			have entities if you define a new entity class; an entry goes here below -->
